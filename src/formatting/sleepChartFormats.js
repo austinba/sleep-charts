@@ -1,6 +1,6 @@
 export const sleepinessLineFormat = {
   fill: false,
-  backgroundColor: 'rgba(75,192,192,0.4)',
+  // backgroundColor: 'rgba(75,192,192,0.4)',
   showLine: true,
   showPoints: false,
   lineTension: 0.1,
@@ -13,6 +13,17 @@ export const sleepinessLineFormat = {
   // pointHoverBackgroundColor: 'rgba(75,192,192,1)',
   // pointHoverBorderColor: 'rgba(220,220,220,1)',
   // pointHoverBorderWidth: 2,
+  pointRadius: 0,
+  pointHitRadius: 10
+};
+export const sleepinessAwakeLineFormat = {
+  fill: false,
+  // backgroundColor: 'rgba(75,192,192,0.4)',
+  showLine: true,
+  showPoints: false,
+  lineTension: 0.1,
+  borderColor: 'rgba(128, 128, 128, 0.2)',
+  borderWidth: 4,
   pointRadius: 0,
   pointHitRadius: 10
 };

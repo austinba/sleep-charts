@@ -3,7 +3,7 @@ import {Scatter} from 'react-chartjs-2';
 import moment from 'moment';
 import computeSleepinessHistory from '../util/computeSleepinessHistory';
 import computeSleepCycles from '../util/computeSleepCycles';
-import {sleepinessLineFormat, cycleLineFormat} from '../formatting/sleepChartFormats';
+import {sleepinessLineFormat, sleepinessAwakeLineFormat, cycleLineFormat} from '../formatting/sleepChartFormats';
 
 export default class SleepChart extends React.Component {
   render() {
@@ -17,11 +17,16 @@ export default class SleepChart extends React.Component {
     const endDate = moment(sleepHistory[sleepHistory.length-1].date, 'M/D/YYYY').add(1, 'days').startOf('day');
 
     const data = {
-      labels: ['Sleepiness', 'Wake Cycle', 'Sleep Cycle'],
+      labels: ['Sleepiness', 'Sleepiness(awake)', 'Wake Cycle', 'Sleep Cycle'],
       datasets: [
         {
           label: 'Sleepiness',
           ...sleepinessLineFormat,
+          data: sleepiness.map( record => (record.status === 'asleep' ? {x: record.time, y: record.sleepiness} : null))
+        },
+        {
+          label: 'Sleepiness (awake)',
+          ...sleepinessAwakeLineFormat,
           data: sleepiness.map( record => ({x: record.time, y: record.sleepiness}))
         },{
           label: 'Wake Cycle',
