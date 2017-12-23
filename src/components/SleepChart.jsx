@@ -23,14 +23,18 @@ export default class SleepChart extends React.Component {
         },{
           label: 'Wake Cycle',
           ...cycleLineFormat,
-          data: cycle.map( record => ({x: record.time, y: record.wakeLine}))
+          data: cycle.map( record => ({x: record.time, y: record.wakeLine})),
+          fill: 'start'
         },{
           label: 'Sleep Cycle',
           ...cycleLineFormat,
-          data: cycle.map( record => ({x: record.time, y: record.sleepLine}))
+          data: cycle.map( record => ({x: record.time, y: record.sleepLine})),
+          fill: 'end'
         }
       ]
     }
-    return <Scatter data={data} />;
+    return <div style={{width: 4000}}>
+      <Scatter data={data} width={2500}/>
+    </div>;
   }
 }
