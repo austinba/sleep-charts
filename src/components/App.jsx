@@ -1,10 +1,12 @@
 import React from 'react';
-import Inputs from './inputs';
+import SleepChart from './SleepChart';
+
+const userData = require('../../example_data/example-1.json');
 
 export default class App extends React.Component {
   render() {
     return <div>
-      <Inputs />
+      <SleepChart userData={userData} />
     </div>;
   }
 }
