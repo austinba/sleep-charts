@@ -1,0 +1,42 @@
+{
+  "params": {
+    "intialSleepiness": 0.85,
+    "wakeConstant": 0.91,
+    "sleepConstant": 0.73,
+    "wakeMean": 0.05,
+    "sleepMean": 0.75,
+    "cycleAmplitude": 0.16,
+    "cycleTrough": "4:00",
+    "cycleSkew": 0.4
+  },
+  "sleep-history": [
+    { "date": "11/4/17", "duration": "7:23", "sleep":	"0:27", "wake": "8:39" },
+    { "date": "11/4/17", "duration": "7:12", "sleep":	"22:32", "wake":	"5:19" },
+    { "date": "11/6/17", "duration": "6:16", "sleep":	"22:42", "wake":	"5:51" },
+    { "date": "11/7/17", "duration": "6:48", "sleep":	"21:34", "wake":	"5:23" },
+    { "date": "11/8/17", "duration": "6:42", "sleep":	"21:32", "wake":	"5:06" },
+    { "date": "11/9/17", "duration": "6:49", "sleep":	"21:04", "wake":	"5:00" },
+    { "date": "11/10/17", "duration": "4:53", "sleep":	"22:48", "wake":	"4:28" },
+    { "date": "11/11/17", "duration": "6:37", "sleep":	"21:27", "wake":	"5:04" },
+    { "date": "11/12/17", "duration": "8:41", "sleep":	"22:31", "wake":	"8:33" },
+    { "date": "11/13/17", "duration": "7:14", "sleep":	"20:48", "wake":	"5:22" },
+    { "date": "11/14/17", "duration": "7:26", "sleep":	"20:58", "wake":	"5:20" },
+    { "date": "11/15/17", "duration": "6:37", "sleep":	"21:39", "wake":	"5:07" },
+    { "date": "11/16/17", "duration": "6:37", "sleep":	"21:19", "wake":	"4:57" },
+    { "date": "11/17/17", "duration": "6:25", "sleep":	"22:03", "wake":	"5:12" },
+    { "date": "11/18/17", "duration": "7:45", "sleep":	"21:51", "wake":	"6:39" },
+    { "date": "11/19/17", "duration": "7:11", "sleep":	"23:16", "wake":	"7:29" },
+    { "date": "11/20/17", "duration": "9:00", "sleep":	"21:10", "wake":	"7:11" },
+    { "date": "11/21/17", "duration": "8:05", "sleep":	"21:20", "wake":	"6:56" },
+    { "date": "11/22/17", "duration": "6:39", "sleep":	"22:07", "wake":	"5:53" },
+    { "date": "11/23/17", "duration": "7:28", "sleep":	"22:34", "wake":	"6:55" },
+    { "date": "11/24/17", "duration": "8:10", "sleep":	"21:01", "wake":	"6:25" },
+    { "date": "11/25/17", "duration": "8:04", "sleep":	"21:53", "wake":	"7:12" },
+    { "date": "11/26/17", "duration": "8:14", "sleep":	"21:37", "wake":	"6:49" },
+    { "date": "11/27/17", "duration": "6:20", "sleep":	"22:37", "wake":	"5:48" },
+    { "date": "11/28/17", "duration": "7:24", "sleep":	"21:16", "wake":	"5:20" },
+    { "date": "11/29/17", "duration": "6:55", "sleep":	"21:04", "wake":	"4:57" },
+    { "date": "11/30/17", "duration": "7:15", "sleep":	"20:59", "wake":	"5:06" },
+    { "date": "12/1/17", "duration": "6:52", "sleep":	"21:09", "wake":	"4:55" }
+  ]
+}
