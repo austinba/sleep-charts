@@ -3,8 +3,8 @@
     "initialSleepiness": 0.85,
     "wakeConstant": 0.91,
     "sleepConstant": 0.73,
-    "wakeMean": 0.05,
-    "sleepMean": 0.75,
+    "wakeMean": 0.07,
+    "sleepMean": 0.82,
     "cycleAmplitude": 0.16,
     "cycleTrough": "4:00",
     "cycleSkew": 0.4
