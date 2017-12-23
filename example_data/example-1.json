@@ -11,7 +11,7 @@
   },
   "sleepHistory": [
     { "date": "11/4/17", "duration": "7:23", "sleep":	"0:27", "wake": "8:39" },
-    { "date": "11/4/17", "duration": "7:12", "sleep":	"22:32", "wake":	"5:19" },
+    { "date": "11/5/17", "duration": "7:12", "sleep":	"22:32", "wake":	"5:19" },
     { "date": "11/6/17", "duration": "6:16", "sleep":	"22:42", "wake":	"5:51" },
     { "date": "11/7/17", "duration": "6:48", "sleep":	"21:34", "wake":	"5:23" },
     { "date": "11/8/17", "duration": "6:42", "sleep":	"21:32", "wake":	"5:06" },
