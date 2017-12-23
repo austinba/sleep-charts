@@ -2,7 +2,7 @@ import moment from 'moment';
 // const data = require('../example_data/example-1.json');
 
 const { initialSleepiness, wakeConstant, sleepConstant } = data.params;
-console.log(data.params);
+
 // Convert JSON sleep history into more useful format
 function parseHistory(history) {
   return history.map( ({date, duration, sleep, wake}) => {
@@ -32,6 +32,7 @@ function parseHistory(history) {
 
 const sleepHistory = parseHistory(data.sleepHistory);
 
+// Figure out what x-axis points we want to plot
 function generateTimesToPlot(sleepHistory) {
   const start = moment(sleepHistory[0].sleep).startOf('day');
   const end = moment(sleepHistory[sleepHistory.length - 1].wake).add(1, 'days').startOf('day');
