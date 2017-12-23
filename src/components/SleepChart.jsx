@@ -43,9 +43,32 @@ export default class SleepChart extends React.Component {
           type: 'time',
           distribution: 'linear',
           time: {
-            unit: 'day',
+            unit: 'hour',
+            stepSize: 1,
             min: startDate,
-            max: endDate
+            max: endDate,
+            displayFormats: {
+              hour: 'MM/DD/YYYY h:mm:ss a'
+            }
+          },
+          ticks: {
+            callback: (value, index) => {
+              const date = moment(value);
+              if(date.hour() === 0) {
+                return date.format('ddd MM/DD')
+              } else if (date.hour() % 3 === 0){
+                return date.format('h a')
+              } else {
+                return null;
+              }
+
+            }
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: 1
           }
         }]
       }

@@ -18,11 +18,11 @@ export const sleepinessLineFormat = {
 };
 export const cycleLineFormat = {
   fill: false,
-  backgroundColor: 'rgba(192,192,192,0.4)',
+  backgroundColor: 'rgba(0, 0, 0, 1)',
   showLine: true,
   showPoints: false,
   lineTension: 0.1,
-  borderColor: 'rgba(192,72,72,1)',
-  borderWidth: 4,
+  borderColor: 'rgba(0,0,0,1)',
+  borderWidth: 1,
   pointRadius: 0
 };
