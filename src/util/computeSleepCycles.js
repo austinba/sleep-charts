@@ -14,7 +14,7 @@ function skewedSine(skew, hour, cycleTrough, cycleAmplitude) {
   ) / 2 * cycleAmplitude;
 };
 
-function computeCycleDataSets(history, skew, cycleTrough_unprocessed, cycleAmplitude, sleepMean, wakeMean) {
+export default function computeSleepCycles(history, skew, cycleTrough_unprocessed, cycleAmplitude, sleepMean, wakeMean) {
   const cycleTrough = moment(cycleTrough_unprocessed, 'h:mm').hour();
   const startDate = moment(history[0].date, 'M/D/YYYY').startOf('day');
   const endDate = moment(history[history.length-1].date, 'M/D/YYYY').add(1, 'days').startOf('day');
