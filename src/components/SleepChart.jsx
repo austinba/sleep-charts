@@ -1,5 +1,6 @@
 import React from 'react';
 import {Scatter} from 'react-chartjs-2';
+import moment from 'moment';
 import computeSleepinessHistory from '../util/computeSleepinessHistory';
 import computeSleepCycles from '../util/computeSleepCycles';
 import {sleepinessLineFormat, cycleLineFormat} from '../formatting/sleepChartFormats';
@@ -12,6 +13,8 @@ export default class SleepChart extends React.Component {
           } = params;
     const sleepiness = computeSleepinessHistory(sleepHistory, initialSleepiness, wakeConstant, sleepConstant);
     const cycle = computeSleepCycles(sleepHistory, cycleSkew, cycleTrough, cycleAmplitude, sleepMean, wakeMean);
+    const startDate = moment(sleepHistory[0].date, 'M/D/YYYY').startOf('day');
+    const endDate = moment(sleepHistory[sleepHistory.length-1].date, 'M/D/YYYY').add(1, 'days').startOf('day');
 
     const data = {
       labels: ['Sleepiness', 'Wake Cycle', 'Sleep Cycle'],
@@ -32,9 +35,23 @@ export default class SleepChart extends React.Component {
           fill: 'end'
         }
       ]
-    }
+    };
+    const options = {
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          type: 'time',
+          distribution: 'linear',
+          time: {
+            unit: 'day',
+            min: startDate,
+            max: endDate
+          }
+        }]
+      }
+    };
     return <div style={{width: 4000}}>
-      <Scatter data={data} width={2500}/>
+      <Scatter data={data} options={options} width={3500} height={230} />
     </div>;
   }
 }
