@@ -1,6 +1,6 @@
 {
   "params": {
-    "intialSleepiness": 0.85,
+    "initialSleepiness": 0.85,
     "wakeConstant": 0.91,
     "sleepConstant": 0.73,
     "wakeMean": 0.05,
