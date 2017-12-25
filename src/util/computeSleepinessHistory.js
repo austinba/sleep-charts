@@ -29,79 +29,57 @@ function parseHistory(history) {
   });
 }
 
+function calculateSleepiness(referenceSleepiness, hoursSinceReference, efficiency, sleepConst, wakeConst) {
+  return 1 - (1-referenceSleepiness * Math.pow(sleepConst, efficiency*hoursSinceReference)) * Math.pow(wakeConst, (1-efficiency) * hoursSinceReference);
+}
 
-// Figure out what x-axis points we want to plot
-function generateTimesToPlot(sleepHistory_unparsed) {
+function markTransitions(array) {
+  if(array[0].status === 'awake') return [{...array[0], status: 'waking-up'}, ...array.slice(1)];
+  if(array[0].status === 'asleep') return [{...array[0], status: 'falling-asleep'}, ...array.slice(1)];
+  return array;
+}
+
+// Compute sleepiness trends during one sleep period or one wake period
+function fillSleepinessValues(array, startSleepiness, status, efficiency, startTime, endTime, wakeConst, sleepConst) {
+  const sleepinessValues = [];
+  for(let time = startTime.clone(); time.diff(endTime) < 0; time.add(1, 'hours')) {
+    sleepinessValues.push({
+      time: time.clone(), status, efficiency,
+      sleepiness: calculateSleepiness(startSleepiness, time.diff(startTime)/3600000, efficiency, sleepConst, wakeConst)
+    });
+  }
+  let time = endTime;
+  sleepinessValues.push({
+    time: time.clone(), status, efficiency,
+    sleepiness: calculateSleepiness(startSleepiness, time.diff(startTime)/3600000, efficiency, sleepConst, wakeConst)
+  });
+  return [...array, ...markTransitions(sleepinessValues)];
+}
+
+// Given a sleep history, compute sleepiness over time in 1 hour increments (plus datapoints at transitions)
+export default function computeSleepinessHistory(sleepHistory_unparsed, initialSleepiness, wakeConst, sleepConst) {
   const sleepHistory = parseHistory(sleepHistory_unparsed);
-  const start = moment(sleepHistory[0].sleep).startOf('day');
-  const end = moment(sleepHistory[sleepHistory.length - 1].wake).add(1, 'days').startOf('day');
-  const timesToPlot = [];
+  let sleepinessHistory = [];
+  let sleepiness = initialSleepiness;
 
-  let currentTime;
-  for(let i = 0; i < sleepHistory.length; i++) {
-    let {sleep, wake, efficiency} = sleepHistory[i];
-    currentTime = moment(sleep);
-    while(wake.diff(currentTime) > 0) {
-      timesToPlot.push({time: moment(currentTime), status: 'asleep', efficiency }); // mock data for now
-      currentTime.add(1, 'hour');
-    }
+  while(sleepHistory.length > 0) {
+    let {sleep, wake, efficiency} = sleepHistory.shift();
 
-    if(i < sleepHistory.length - 1) { // not the last one
-      currentTime = moment(wake);
-      while(sleepHistory[i+1].sleep.diff(currentTime) > 0) {
-        timesToPlot.push({time: moment(currentTime), status: 'awake', efficiency: 0}); // mock data for now
-        currentTime.add(1, 'hour');
-      }
-    } else {
-      timesToPlot.push({time: moment(wake), status: 'awake', efficiency: 0}); // mock data for now
+    // SLEEP Period
+    sleepinessHistory.pop();
+    sleepinessHistory = fillSleepinessValues(sleepinessHistory, sleepiness, 'asleep', efficiency, sleep, wake, wakeConst, sleepConst);
+    sleepiness = sleepinessHistory[sleepinessHistory.length-1].sleepiness;
+
+    // WAKE Period
+    if(sleepHistory.length > 0) {
+      let nextSleep = sleepHistory[0].sleep;
+      sleepinessHistory.pop();
+      sleepinessHistory = fillSleepinessValues(sleepinessHistory, sleepiness, 'awake', 0, wake, nextSleep, wakeConst, sleepConst);
+      sleepiness = sleepinessHistory[sleepinessHistory.length-1].sleepiness;
     }
   }
-  return timesToPlot;
-}
 
-// Convert sleep history to sleepiness based on params
-export default function convertToSleepinessHistory(sleepHistory, initialSleepiness, wakeConst, sleepConst) {
-  const timesToPlot = generateTimesToPlot(sleepHistory);
-  const sleepinessHistory = [];
-  let status = 'asleep';
-
-  // "trans" = last point of transition (falling asleep or waking up)
-  let transTime = moment(timesToPlot[0].time);
-  let transSleepiness = initialSleepiness;
-  let eff = timesToPlot[0].efficiency;
-
-  // generate sleepiness for each timestamp
-  for(let i = 0; i < timesToPlot.length; i++) {
-    let record = timesToPlot[i];
-
-    // compute sleepiness
-    let hoursSinceTrans = record.time.diff(transTime)/3600000; // millseconds to hours
-    let sleepiness = 1 - (1-transSleepiness * Math.pow(sleepConst, eff*hoursSinceTrans)) * Math.pow(wakeConst, (1-eff) * hoursSinceTrans)
-
-    // for debugging
-    // console.log(record.time.format("M/D/YYYY hh:mm:ss a") + ', ' + status + ', ' + sleepiness);
-
-    sleepinessHistory.push({
-      time: record.time,
-      status: record.status,
-      efficiency: record.efficiency,
-      sleepiness
-    })
-
-    // change status if needed
-    if(status !== record.status) {
-      status = record.status;
-      transTime = moment(record.time);
-      transSleepiness = sleepiness;
-    }
-
-    // update efficiency for next calculation
-    eff = record.efficiency;
-  }
-
+  console.log(sleepinessHistory);
   return sleepinessHistory;
+
 }
-
-
-// const sleepHistory = parseHistory(data.sleepHistory);
-// convertToSleepinessHistory(sleepHistory, initialSleepiness, wakeConstant, sleepConstant);
