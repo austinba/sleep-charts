@@ -16,18 +16,19 @@ export default class SleepChart extends React.Component {
     const startDate = moment(sleepHistory[0].date, 'M/D/YYYY').startOf('day');
     const endDate = moment(sleepHistory[sleepHistory.length-1].date, 'M/D/YYYY').add(1, 'days').startOf('day');
 
+    // console.log(sleepiness.map( record => (record.status === 'asleep' ? {x: record.time, y: record.sleepiness} : null)));
     const data = {
       labels: ['Sleepiness', 'Sleepiness(awake)', 'Wake Cycle', 'Sleep Cycle'],
       datasets: [
         {
           label: 'Sleepiness',
           ...sleepinessLineFormat,
-          data: sleepiness.map( record => (record.status === 'asleep' ? {x: record.time, y: record.sleepiness} : null))
+          data: sleepiness.map( record => ((record.status === 'asleep' || record.status === 'waking-up' || record.status === 'falling-asleep') ? {x: record.time, y: record.sleepiness} : null))
         },
         {
           label: 'Sleepiness (awake)',
           ...sleepinessAwakeLineFormat,
-          data: sleepiness.map( record => ({x: record.time, y: record.sleepiness}))
+          data: sleepiness.map( record => ((record.status === 'awake' || record.status === 'waking-up' || record.status === 'falling-asleep') ? {x: record.time, y: record.sleepiness} : null))
         },{
           label: 'Wake Cycle',
           ...cycleLineFormat,
