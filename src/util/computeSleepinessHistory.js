@@ -79,7 +79,6 @@ export default function computeSleepinessHistory(sleepHistory_unparsed, initialS
     }
   }
 
-  console.log(sleepinessHistory);
   return sleepinessHistory;
 
 }
